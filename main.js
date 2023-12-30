@@ -1,1 +1,1 @@
-console.log("Hello world");
+(()=>{"use strict";new class{constructor(t,s){this.name=t,this.desc=s,this.toDoList=[]}addToDoItem(t){this.toDoList.push(t)}removeToDoItem(t){for(let s=0;s<this.toDoList.length;s++)if(t[s]===t){this.toDoList.splice(s,1);break}}}("All Todos","list of all to do items"),new class{constructor(t,s=null,i=null,o=null,e=null,l=null){this.title=t,this.desc=s,this.dueDate=i,this.priority=o,this.notes=e,this.checkList=l,this.status="Not started"}changePriority(t){this.priority=t}updateStatus(t){this.status=t}}("Code to do list project")})();
