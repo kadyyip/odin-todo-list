@@ -26,13 +26,15 @@ const dueDateInput = document.querySelector("#due-date");
 const priorityInput = document.querySelector("#priority"); 
 const projectInput = document.querySelector("#project"); 
 const submitToDoForm = document.querySelector(".to-do-form .submit");
+const toDoErrorMsg = document.querySelector(".to-do-form .error");
 
 const projectDialog = document.querySelector(".project-form-container");
 const projectDialogCloseBtn = document.querySelector(".project-form-container .close");
-const projectForm = document.querySelector(".to-do-form");
+const projectForm = document.querySelector(".project-form");
 const projectTitleInput = document.querySelector("#proj-title"); 
 const projectDescInput = document.querySelector("#proj-desc"); 
 const submitProjectForm = document.querySelector(".project-form .submit");
+const projectErrorMsg = document.querySelector(".project-form .error");
 
 const toDoDtlDialog = document.querySelector(".to-do-dtl");
 const toDoDtlDialogCloseBtn = document.querySelector(".to-do-dtl .close");
@@ -66,6 +68,16 @@ function displaySidebar() {
         let project = projects[i]
         let projectDiv = document.createElement("div");
         projectDiv.textContent = project.title;
+        let deleteImg = document.createElement("img");
+        deleteImg.classList.add("icon", "icon-hover");
+        deleteImg.src = trash;
+        deleteImg.addEventListener("click", () => {
+            projectLibrary.deleteProject(project);
+            clearContent(projectContainerDiv);
+            displaySidebar();
+            renderToDos();
+        })   
+        projectDiv.appendChild(deleteImg);
         projectDiv.classList.add("project");
         projectDiv.dataset.projIndex = i;
         projectDiv.addEventListener("click", () => {
@@ -124,7 +136,7 @@ function displayToDoItem(toDoItem, project, index) {
     toDoRightDiv.appendChild(dueDateDiv);
     
     let editImg = document.createElement("img");
-    editImg.classList.add("icon");
+    editImg.classList.add("icon", "icon-hover");
     editImg.src = edit;
     editImg.addEventListener("click", () => {
         toDoDialog.showModal();
@@ -137,7 +149,7 @@ function displayToDoItem(toDoItem, project, index) {
     toDoRightDiv.appendChild(editImg);
 
     let deleteImg = document.createElement("img");
-    deleteImg.classList.add("icon");
+    deleteImg.classList.add("icon", "icon-hover");
     deleteImg.src = trash;
     deleteImg.addEventListener("click", () => {
         project.removeToDoItem(toDoItem);
@@ -200,6 +212,9 @@ function renderToDos() {
         displayTodayToDos();
     } else {
         const project = projectLibrary.getProjectByTitle(headingDiv.textContent);
+        if (project === null) {
+            displayAllToDos();
+        }
         displayToDos(project);
     }
 }
@@ -241,6 +256,7 @@ function fillToDoForm(toDoItem) {
     priorityInput.value = toDoItem.priority;
     projectInput.value = toDoItem.project;
 }
+
 
 function updateToDoItem(toDoItemIndex, projectTitle) {
     const currProject = projectLibrary.getProjectByTitle(projectTitle);
@@ -296,29 +312,50 @@ projectDialogCloseBtn.addEventListener("click", () => {
 
 submitProjectForm.addEventListener("click", (event) => {
     event.preventDefault();
-    projectLibrary.addProject(
-        new Project(projectTitleInput.value, projectDescInput.value)
-    );
-    projectForm.reset();
-    projectDialog.close();
-    clearContent(projectContainerDiv);
-    displaySidebar();
-    localStorage.saveProjectLibrary();
+    if (!(projectTitleInput.value)) {
+        if (projectErrorMsg.textContent === "") {
+            projectErrorMsg.textContent = "Please fill in required fields!";
+        }
+    }
+    else {
+        if (projectErrorMsg !== null) {
+            projectErrorMsg.textContent = "";
+        }
+        projectLibrary.addProject(
+            new Project(projectTitleInput.value, projectDescInput.value)
+        );
+        projectForm.reset();
+        projectDialog.close();
+        clearContent(projectContainerDiv);
+        displaySidebar();
+        localStorage.saveProjectLibrary();
+    }
 });
 
 submitToDoForm.addEventListener("click", (event) => {
     event.preventDefault();
-    if (toDoForm.dataset.toDoItemIndex !== "-1") {
-        updateToDoItem(toDoForm.dataset.toDoItemIndex, 
-            toDoForm.dataset.toDoItemProject);
-    } else {
-        const project = projectLibrary.getProjectByTitle(projectInput.value);
-        project.addToDoItem(new ToDoItem(titleInput.value, dueDateInput.value, 
-            priorityInput.value, projectInput.value, descInput.value));
-    toDoForm.reset();
+    if (!(titleInput.value && dueDateInput.value && priorityInput.value && 
+        projectInput.value)) {
+        if (toDoErrorMsg.textContent === "") {
+            toDoErrorMsg.textContent = "Please fill in required fields!";
+        }
     }
-    toDoDialog.close();
-    renderToDos();
+    else {
+        if (toDoErrorMsg !== null) {
+            toDoErrorMsg.textContent = "";
+        }
+        if (toDoForm.dataset.toDoItemIndex !== "-1") {
+            updateToDoItem(toDoForm.dataset.toDoItemIndex, 
+                toDoForm.dataset.toDoItemProject);
+        } else {
+            const project = projectLibrary.getProjectByTitle(projectInput.value);
+            project.addToDoItem(new ToDoItem(titleInput.value, dueDateInput.value, 
+                priorityInput.value, projectInput.value, descInput.value));
+        toDoForm.reset();
+        }
+        toDoDialog.close();
+        renderToDos();
+    }
 });
 
 export { loadPage }

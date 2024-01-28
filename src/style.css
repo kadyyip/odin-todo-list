@@ -30,13 +30,20 @@ body {
     padding: 1rem 2rem;
 }
 
-.project, button[type=button].project {
+.project, button[type=button].add-project {
     padding: 1rem 2rem;
     border-radius: 1rem;
     font-size: 24px;
 }
 
-.project:hover, button[type=button].project:hover {
+.project {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project:hover, button[type=button].add-project:hover {
     background-color: #cfcfcf;
 }
 
@@ -97,6 +104,10 @@ body {
     height: 1.5rem;
 }
 
+.icon-hover:hover {
+    transform: scale(1.2);
+}
+
 dialog[open] {
     display: flex;
     flex-direction: column;
@@ -119,7 +130,6 @@ dialog::backdrop {
 }
 
 form {
-    /* padding: 2rem; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -131,6 +141,15 @@ form {
     flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
+}
+
+input:invalid {
+    border: 1px solid #D61F1F;
+    border-radius: 4px;
+}
+
+.error {
+    color: #D61F1F;
 }
 
 button[type=button] {

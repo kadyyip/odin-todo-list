@@ -40,6 +40,7 @@ class ProjectLibrary {
                 return project;
             }
         }
+        return null;
     }
 
     getProjects() {
@@ -52,7 +53,7 @@ class ProjectLibrary {
 
     deleteProject(project) {
         for (let i = 0; i < this.projects.length; i++) {
-            let currProject = projects[i];
+            let currProject = this.projects[i];
             if (project === currProject) {
                 this.projects.splice(i, 1);
                 break;
