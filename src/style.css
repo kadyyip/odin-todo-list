@@ -1,0 +1,157 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 5fr;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    grid-column: 1 / -1;
+    padding: 2rem;
+    background-color: #000000;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.sidebar {
+    background-color: #ededed;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 24px;
+    padding: 1rem 2rem;
+}
+
+.project, button[type=button].project {
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-size: 24px;
+}
+
+.project:hover, button[type=button].project:hover {
+    background-color: #cfcfcf;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.heading {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.to-do, .to-do-left, .to-do-right {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ededed;
+    
+}
+
+.to-do-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.to-do {
+    padding: 1rem;
+}
+
+.high {
+    border-left: solid 5px #D61F1F;
+}
+
+.medium {
+    border-left: solid 5px #FFD301;
+}
+
+.low {
+    border-left: solid 5px #006B3D;
+}
+
+.to-do-title:hover {
+    color: #3c70c9; 
+}
+
+.complete {
+    text-decoration: line-through;
+    opacity: 0.5
+}
+
+.icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -30%);
+    width: 50%;
+    height: 80%;
+    padding: 2rem;
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(2px);
+}
+
+.close {
+    align-self: flex-end;
+}
+
+form {
+    /* padding: 2rem; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+button[type=button] {
+    color: #808080;
+    padding: 10px;
+    border: none;
+    background-color: #ffffff00;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+button[type=button]:hover {
+    background-color: #ededed;
+}
+
+.dtl-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.dtl-desc, .desc {
+    font-style: italic;
+}
